@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berlijn — Debreul Travel | Schoolreis Geschiedenis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#14161d;
+    --concrete:#383c44;
+    --concrete-light:#52565f;
+    --concrete-pale:#6b707a;
+    --signal-red:#c2362a;
+    --wall-gold:#e3a23c;
+    --graffiti-cyan:#3fc3b8;
+    --paper:#ece6da;
+    --paper-dim:#d9d2c2;
+    --ink:#1d1c19;
+    --text-light:#f1efe9;
+    --text-muted:#a8acb4;
+    --display:'Bebas Neue', sans-serif;
+    --body:'Lora', serif;
+    --mono:'IBM Plex Mono', monospace;
+    --maxw:1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-deep);
+    color:var(--text-light);
+    font-family:var(--body);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  ::selection{background:var(--wall-gold);color:var(--ink);}
+  :focus-visible{outline:3px solid var(--wall-gold);outline-offset:3px;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  h1,h2,h3{font-family:var(--display);letter-spacing:.03em;text-transform:uppercase;line-height:1;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.78rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--wall-gold);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--wall-gold);display:inline-block;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:18px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+    transition:background .35s ease, padding .35s ease, box-shadow .35s ease;
+  }
+  .nav.scrolled{
+    background:rgba(20,22,29,.92);
+    backdrop-filter:blur(10px);
+    padding:12px 28px;
+    box-shadow:0 1px 0 rgba(255,255,255,.06);
+  }
+  .nav-inner{max-width:var(--maxw);margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:1.25rem;letter-spacing:.04em;}
+  .logo svg{width:30px;height:30px;}
+  .nav-links{display:flex;gap:30px;list-style:none;align-items:center;}
+  .nav-links a{
+    font-family:var(--mono);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;
+    text-decoration:none;color:var(--text-muted);position:relative;padding-bottom:4px;
+    transition:color .25s;
+  }
+  .nav-links a:hover{color:var(--text-light);}
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--wall-gold);
+    transition:width .25s;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .btn{
+    font-family:var(--mono);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;
+    background:var(--wall-gold);color:var(--ink);border:none;
+    padding:11px 22px;border-radius:2px;cursor:pointer;text-decoration:none;
+    display:inline-block;font-weight:600;transition:transform .2s, background .2s;
+  }
+  .btn:hover{background:#f0b357;transform:translateY(-2px);}
+  .btn-ghost{
+    background:transparent;border:1px solid var(--text-light);color:var(--text-light);
+  }
+  .btn-ghost:hover{background:var(--text-light);color:var(--ink);}
+  .nav-toggle{display:none;background:none;border:none;color:var(--text-light);font-size:1.6rem;cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    overflow:hidden;
+  }
+  .hero-bg{position:absolute;inset:0;z-index:0;}
+  .hero-bg svg{width:100%;height:100%;}
+  .hero-content{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 28px;width:100%;}
+  .hero h1{
+    font-size:clamp(4.5rem, 16vw, 11rem);
+    color:var(--text-light);
+    text-shadow:0 4px 40px rgba(0,0,0,.4);
+  }
+  .hero-sub{
+    font-family:var(--body);font-style:italic;font-size:clamp(1.05rem,2vw,1.4rem);
+    max-width:480px;color:var(--text-light);margin-top:18px;
+  }
+  .btn-hero{
+    display:inline-flex;align-items:center;gap:12px;
+    font-family:var(--mono);font-size:1rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+    background:var(--wall-gold);color:var(--ink);text-decoration:none;
+    padding:20px 38px;border-radius:3px;margin-top:38px;
+    box-shadow:0 10px 30px rgba(227,162,60,.35);
+    transition:transform .2s, box-shadow .2s, background .2s;
+  }
+  .btn-hero svg{width:20px;height:20px;transition:transform .2s;}
+  .btn-hero:hover{background:#f0b357;transform:translateY(-3px);box-shadow:0 14px 36px rgba(227,162,60,.45);}
+  .btn-hero:hover svg{transform:translateX(4px);}
+  .hero-bottom{
+    position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;
+    padding:0 28px 40px;max-width:var(--maxw);margin:40px auto 0;width:100%;
+  }
+  .scroll-cue{font-family:var(--mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:10px;}
+  .scroll-cue .line{width:1px;height:34px;background:linear-gradient(to bottom, var(--wall-gold), transparent);animation:scrollline 1.8s ease-in-out infinite;}
+  @keyframes scrollline{0%,100%{opacity:.3}50%{opacity:1}}
+  .hero-stats{display:flex;gap:28px;}
+  .stat{font-family:var(--mono);font-size:.78rem;color:var(--text-muted);text-align:right;}
+  .stat b{display:block;font-family:var(--display);font-size:1.6rem;color:var(--wall-gold);letter-spacing:.02em;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:120px 0;position:relative;}
+  .section-head{max-width:680px;margin-bottom:60px;}
+  .section-head h2{font-size:clamp(2.4rem,5vw,3.6rem);color:var(--text-light);}
+  .section-head p{color:var(--text-muted);margin-top:16px;font-size:1.05rem;max-width:560px;}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* ---------- INTRO ---------- */
+  .intro{background:var(--bg-deep);}
+  .intro-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;}
+  .intro-text p{font-size:1.12rem;color:var(--paper-dim);}
+  .chip-row{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .chip{
+    font-family:var(--mono);font-size:.8rem;border:1px solid var(--concrete-light);
+    border-radius:30px;padding:9px 18px;color:var(--text-muted);
+  }
+  .intro-art{display:flex;justify-content:center;}
+  .intro-art svg{width:100%;max-width:340px;}
+
+  /* ---------- TIMELINE (geschiedenis) ---------- */
+  .geschiedenis{background:linear-gradient(180deg, var(--bg-deep) 0%, #1b1c24 100%);}
+  .timeline{position:relative;margin-top:20px;}
+  .timeline::before{
+    content:"";position:absolute;left:120px;top:0;bottom:0;width:2px;
+    background:repeating-linear-gradient(to bottom, var(--concrete-light) 0 10px, transparent 10px 18px);
+  }
+  .t-item{display:grid;grid-template-columns:120px 1fr;gap:36px;margin-bottom:70px;position:relative;}
+  .t-year{
+    font-family:var(--mono);font-size:1rem;color:var(--wall-gold);text-align:right;padding-top:4px;
+    position:relative;
+  }
+  .t-year::after{
+    content:"";position:absolute;right:-41px;top:6px;width:14px;height:14px;border-radius:50%;
+    background:var(--wall-gold);box-shadow:0 0 0 5px var(--bg-deep);
+  }
+  .t-card{background:var(--concrete);border-radius:4px;padding:32px 36px;border-left:3px solid var(--signal-red);}
+  .t-card h3{font-size:1.5rem;color:var(--text-light);margin-bottom:14px;letter-spacing:.02em;}
+  .t-card p{color:var(--paper-dim);font-size:1.02rem;}
+
+  /* ---------- VANDAAG ---------- */
+  .vandaag{background:var(--paper);color:var(--ink);}
+  .vandaag .section-head h2{color:var(--ink);}
+  .vandaag .section-head p{color:#5a5648;}
+  .v-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;}
+  .v-card{position:relative;padding-top:10px;}
+  .v-card .eyebrow{color:var(--signal-red);}
+  .v-card .eyebrow::before{background:var(--signal-red);}
+  .v-card h3{font-size:1.8rem;margin-bottom:14px;color:var(--ink);}
+  .v-card p{color:#4a463b;font-size:1.05rem;}
+  .v-icon{width:54px;height:54px;margin-bottom:18px;color:var(--graffiti-cyan);}
+
+  /* ---------- HOTEL ---------- */
+  .hotel{background:#1b1c24;}
+  .hotel-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;}
+  .hotel-text p{font-size:1.08rem;color:var(--paper-dim);}
+  .fact-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:36px;max-width:420px;}
+  .fact{font-family:var(--mono);font-size:.92rem;color:var(--text-light);border-top:1px solid var(--concrete-light);padding-top:10px;}
+  .fact span{display:block;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+  .hotel-art{display:flex;justify-content:center;}
+  .hotel-art svg{width:100%;max-width:300px;}
+
+  /* ---------- VERVOER / ACTIVITEITEN (info grids) ---------- */
+  .vervoer{background:var(--paper);color:var(--ink);}
+  .activiteiten{background:#1b1c24;}
+  .info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .info-card{background:#fff;border-radius:4px;padding:30px 24px;border-top:3px solid var(--signal-red);}
+  .info-card h3{font-size:1.2rem;margin-bottom:10px;color:var(--ink);letter-spacing:.02em;}
+  .info-card p{font-size:.94rem;color:#5a5648;}
+  .info-icon{width:42px;height:42px;margin-bottom:16px;color:var(--signal-red);}
+  .info-card-dark{background:var(--concrete);border-top:3px solid var(--graffiti-cyan);}
+  .info-card-dark h3{color:var(--text-light);}
+  .info-card-dark p{color:var(--paper-dim);}
+  .info-grid-dark .info-icon{color:var(--graffiti-cyan);}
+
+  /* ---------- WANDELING ---------- */
+  .wandeling{background:var(--bg-deep);}
+  .route-meta{
+    display:inline-flex;gap:24px;font-family:var(--mono);font-size:.85rem;color:var(--text-muted);
+    border:1px solid var(--concrete-light);padding:14px 24px;border-radius:30px;margin-bottom:50px;
+  }
+  .route-meta b{color:var(--wall-gold);}
+  .route{position:relative;}
+  .route::before{
+    content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--concrete-light);
+    transform:translateX(-50%);
+  }
+  .stop{
+    position:relative;width:50%;padding:0 50px 70px;
+  }
+  .stop:nth-child(odd){left:0;text-align:right;}
+  .stop:nth-child(even){left:50%;text-align:left;}
+  .stamp{
+    position:absolute;top:0;width:64px;height:64px;border:2px dashed var(--wall-gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;background:var(--bg-deep);
+    transform:rotate(-6deg);
+  }
+  .stop:nth-child(odd) .stamp{right:-32px;}
+  .stop:nth-child(even) .stamp{left:-32px;}
+  .stamp svg{width:30px;height:30px;color:var(--wall-gold);}
+  .stop-num{
+    font-family:var(--mono);font-size:.78rem;color:var(--concrete-pale);letter-spacing:.1em;margin-bottom:6px;
+  }
+  .stop h3{font-size:1.5rem;color:var(--text-light);margin-bottom:10px;}
+  .stop p{color:var(--paper-dim);font-size:1rem;}
+
+  .audio-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:transparent;border:1px solid var(--graffiti-cyan);color:var(--graffiti-cyan);
+    font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+    padding:7px 14px;border-radius:30px;cursor:pointer;margin:8px 0 16px;
+    transition:background .2s, color .2s;
+  }
+  .audio-btn:hover{background:rgba(63,195,184,.14);}
+  .audio-icon{width:15px;height:15px;flex-shrink:0;}
+  .audio-bars{display:inline-flex;gap:2px;align-items:center;height:12px;}
+  .audio-bars span{width:2px;background:currentColor;display:inline-block;height:4px;border-radius:1px;}
+  .audio-btn.playing{background:rgba(63,195,184,.2);}
+  .audio-btn.playing .audio-bars span{animation:audiobar 0.9s ease-in-out infinite;}
+  .audio-bars span:nth-child(1){animation-delay:0s;}
+  .audio-bars span:nth-child(2){animation-delay:.2s;}
+  .audio-bars span:nth-child(3){animation-delay:.4s;}
+  @keyframes audiobar{0%,100%{height:4px;}50%{height:12px;}}
+  body.no-audio .audio-btn{display:none;}
+
+  /* ---------- TIPS ---------- */
+  .tips{background:#1b1c24;}
+  .tips-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .tip-card{
+    background:var(--concrete);padding:30px 26px;border-radius:4px;
+    border-top:3px solid var(--graffiti-cyan);
+  }
+  .tip-card .tip-num{font-family:var(--mono);color:var(--graffiti-cyan);font-size:.85rem;margin-bottom:14px;display:block;}
+  .tip-card p{color:var(--paper-dim);font-size:.96rem;}
+
+  /* ---------- FOOTER / BOEK NU ---------- */
+  .footer-cta{
+    background:linear-gradient(135deg, var(--signal-red) 0%, #8e231b 100%);
+    padding:110px 0 60px;position:relative;overflow:hidden;
+  }
+  .footer-cta::after{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(135deg, rgba(255,255,255,.04) 0 2px, transparent 2px 26px);
+  }
+  .fc-inner{position:relative;z-index:1;}
+  .footer-cta h2{font-size:clamp(2.4rem,6vw,4.2rem);color:var(--text-light);max-width:780px;}
+  .footer-cta .tagline{font-style:italic;font-family:var(--body);font-size:1.2rem;margin:20px 0 40px;max-width:560px;color:#ffe6e1;}
+  .contact-grid{display:flex;flex-wrap:wrap;gap:50px;margin-top:60px;padding-top:40px;border-top:1px solid rgba(255,255,255,.25);align-items:center;justify-content:space-between;}
+  .contact-list{display:flex;flex-direction:column;gap:8px;font-family:var(--mono);font-size:.95rem;}
+  .contact-list a{text-decoration:none;}
+  .credit{font-family:var(--mono);font-size:.78rem;color:#ffd8d1;letter-spacing:.05em;}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:880px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+    .intro-grid{grid-template-columns:1fr;}
+    .intro-art{order:-1;}
+    .v-grid{grid-template-columns:1fr;gap:50px;}
+    .hotel-grid{grid-template-columns:1fr;}
+    .hotel-art{order:-1;}
+    .info-grid{grid-template-columns:1fr 1fr;}
+    .tips-grid{grid-template-columns:1fr 1fr;}
+    .timeline::before{left:60px;}
+    .t-item{grid-template-columns:60px 1fr;gap:20px;}
+    .t-year::after{right:-31px;}
+    .route::before{left:24px;}
+    .stop, .stop:nth-child(even){width:100%;left:0;text-align:left;padding:0 0 60px 70px;}
+    .stop:nth-child(odd) .stamp, .stop:nth-child(even) .stamp{left:-6px;right:auto;}
+    .hero-bottom{flex-direction:column;align-items:flex-start;gap:24px;}
+  }
+  @media (max-width:560px){
+    .tips-grid{grid-template-columns:1fr;}
+    .info-grid{grid-template-columns:1fr;}
+    .fact-grid{grid-template-columns:1fr 1fr;}
+    .contact-grid{flex-direction:column;align-items:flex-start;gap:22px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* mobile dropdown */
+  .mobile-menu{
+    position:fixed;top:0;right:0;height:100vh;width:78%;max-width:320px;background:#1b1c24;
+    z-index:200;transform:translateX(100%);transition:transform .35s ease;
+    padding:90px 32px;display:flex;flex-direction:column;gap:26px;box-shadow:-10px 0 30px rgba(0,0,0,.4);
+  }
+  .mobile-menu.open{transform:translateX(0);}
+  .mobile-menu a{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;text-decoration:none;font-size:1rem;color:var(--text-light);}
+  .mobile-close{position:absolute;top:28px;right:28px;background:none;border:none;color:var(--text-light);font-size:1.6rem;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="logo">
+      <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/><path d="M12 22 L20 12 L28 22 M20 12 V28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      DEBREUL TRAVEL
+    </div>
+    <ul class="nav-links">
+      <li><a href="#intro">De stad</a></li>
+      <li><a href="#geschiedenis">Tijdlijn</a></li>
+      <li><a href="#vandaag">Vandaag</a></li>
+      <li><a href="#hotel">Hotel</a></li>
+      <li><a href="#wandeling">Route</a></li>
+      <li><a href="#vervoer">Vervoer</a></li>
+      <li><a href="#activiteiten">Activiteiten</a></li>
+      <li><a href="#tips">Tips</a></li>
+      <li><a href="boeken.html" class="btn">Boek nu</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Sluit menu">✕</button>
+  <a href="#intro">De stad</a>
+  <a href="#geschiedenis">Tijdlijn</a>
+  <a href="#vandaag">Vandaag</a>
+  <a href="#hotel">Hotel</a>
+  <a href="#wandeling">Route</a>
+  <a href="#vervoer">Vervoer</a>
+  <a href="#activiteiten">Activiteiten</a>
+  <a href="#tips">Tips</a>
+  <a href="boeken.html" class="btn" style="text-align:center;">Boek nu</a>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="greySide" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2a2c33"/>
+          <stop offset="100%" stop-color="#181a20"/>
+        </linearGradient>
+        <linearGradient id="warmSide" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3a3326"/>
+          <stop offset="100%" stop-color="#1c1b18"/>
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="800" fill="url(#greySide)"/>
+      <path id="crackPath" d="M700,0 L660,90 L720,150 L640,260 L710,340 L650,430 L730,520 L680,610 L740,700 L700,800 L1200,800 L1200,0 Z" fill="url(#warmSide)"/>
+      <path d="M700,0 L660,90 L720,150 L640,260 L710,340 L650,430 L730,520 L680,610 L740,700 L700,800" stroke="#e3a23c" stroke-width="3" fill="none" opacity="0.7" stroke-dasharray="1400" stroke-dashoffset="1400" id="crackLine"/>
+      <g opacity="0.5">
+        <rect x="940" y="560" width="14" height="240" fill="#23211c"/>
+        <rect x="980" y="500" width="10" height="300" fill="#23211c"/>
+        <circle cx="985" cy="488" r="14" fill="none" stroke="#e3a23c" stroke-width="3"/>
+        <rect x="1030" y="600" width="12" height="200" fill="#23211c"/>
+        <path d="M250 800 L250 250 Q250 200 300 200 L320 200 Q280 200 280 150 Q280 110 320 110 Q280 110 280 70 L300 70 L300 800" fill="none" stroke="#3a3e46" stroke-width="6" opacity="0.6"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="eyebrow">DEBREUL TRAVEL — SCHOOLREIS GESCHIEDENIS</div>
+    <h1>BERLIJN</h1>
+    <p class="hero-sub">Ontdek het wonderlijke Berlijn — een stad vol verhalen uit het verleden.</p>
+    <a href="boeken.html" class="btn-hero">
+      Boek nu
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12 H19 M13 6 L19 12 L13 18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <div class="hero-bottom">
+    <div class="scroll-cue"><span class="line"></span>Scroll door de geschiedenis</div>
+    <div class="hero-stats">
+      <div class="stat"><b>28</b>jaar verdeeld</div>
+      <div class="stat"><b>1989</b>val van de Muur</div>
+      <div class="stat"><b>8 km</b>wandelroute</div>
+    </div>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section class="intro" id="intro">
+  <div class="wrap">
+    <div class="intro-grid">
+      <div class="intro-text reveal">
+        <div class="eyebrow">De stad</div>
+        <h2 style="font-size:clamp(2.2rem,4.5vw,3.2rem);color:var(--text-light);margin-bottom:24px;">Introductie Berlijn</h2>
+        <p>Berlijn ligt in het noordoosten van Duitsland en is de hoofdstad van het land. De stad is historisch belangrijk omdat hier grote gebeurtenissen van de 20e eeuw plaatsvonden.</p>
+        <p style="margin-top:16px;">Berlijn was het centrum van nazi-Duitsland tijdens de Tweede Wereldoorlog en werd daarna verdeeld in Oost en West. De Berlijnse Muur maakte de stad het belangrijkste symbool van de Koude Oorlog en later van de Duitse hereniging.</p>
+        <div class="chip-row">
+          <span class="chip">Hoofdstad van Duitsland</span>
+          <span class="chip">Centrum van WO2</span>
+          <span class="chip">Symbool van de Koude Oorlog</span>
+        </div>
+      </div>
+      <div class="intro-art reveal">
+        <svg viewBox="0 0 300 360" aria-hidden="true">
+          <rect x="20" y="220" width="260" height="6" fill="#52565f"/>
+          <rect x="40" y="60" width="50" height="160" fill="#383c44"/>
+          <polygon points="40,60 65,20 90,60" fill="#52565f"/>
+          <rect x="60" y="0" width="10" height="22" fill="#52565f"/>
+          <circle cx="65" cy="0" r="6" fill="#e3a23c"/>
+          <rect x="120" y="90" width="60" height="130" fill="#383c44"/>
+          <rect x="130" y="100" width="14" height="20" fill="#181a20"/>
+          <rect x="156" y="100" width="14" height="20" fill="#181a20"/>
+          <rect x="130" y="135" width="14" height="20" fill="#181a20"/>
+          <rect x="156" y="135" width="14" height="20" fill="#181a20"/>
+          <rect x="200" y="140" width="40" height="80" fill="#383c44"/>
+          <path d="M200,140 Q220,110 240,140" fill="none" stroke="#52565f" stroke-width="4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GESCHIEDENIS -->
+<section class="geschiedenis" id="geschiedenis">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">De tijdlijn</div>
+      <h2>Oorlogen in Berlijn</h2>
+      <p>Twee oorlogen die de stad voor altijd hebben veranderd — van wereldoorlog tot een stad in tweeën gedeeld door een muur.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item reveal">
+        <div class="t-year">1939–1945</div>
+        <div class="t-card">
+          <h3>WW2 in Berlijn</h3>
+          <p>Tijdens de Tweede Wereldoorlog was Berlijn de hoofdstad van nazi-Duitsland en het machtscentrum van Adolf Hitler. In 1945 werd de stad veroverd door het Sovjetleger tijdens de Slag om Berlijn. Hitler pleegde op 30 april 1945 zelfmoord in de Führerbunker en op 8 mei gaf Duitsland zich over. Na de oorlog lag een groot deel van Berlijn in puin. Duitsland werd verdeeld in vier bezettingszones, wat later leidde tot de verdeling in Oost- en West-Duitsland en het begin van de Koude Oorlog.</p>
+        </div>
+      </div>
+      <div class="t-item reveal">
+        <div class="t-year">1949–1989</div>
+        <div class="t-card">
+          <h3>De Koude Oorlog in Berlijn</h3>
+          <p>Na de Tweede Wereldoorlog werd Duitsland verdeeld in Oost- en West-Duitsland. Ook Berlijn werd verdeeld. Oost-Berlijn hoorde bij de Sovjet-Unie en West-Berlijn bij de westerse landen. In 1961 werd de Berlijnse Muur gebouwd om te voorkomen dat mensen van Oost- naar West-Berlijn vluchtten. In Oost-Berlijn was minder vrijheid en had de overheid veel controle. In West-Berlijn was meer vrijheid en een sterkere economie. De Berlijnse Muur bleef staan tot 1989 en werd het bekendste symbool van de Koude Oorlog. Daarna werd Duitsland weer één land.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VANDAAG -->
+<section class="vandaag" id="vandaag">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Berlijn nu</div>
+      <h2>Berlijn vandaag</h2>
+      <p>Van de Muur tot de wereldkeuken — vandaag is Berlijn een van de meest creatieve en gevarieerde steden van Europa.</p>
+    </div>
+    <div class="v-grid">
+      <div class="v-card reveal">
+        <svg class="v-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40 Q14 20 24 32 Q34 44 42 16" stroke="currentColor" stroke-width="3" fill="none"/><circle cx="24" cy="32" r="3" fill="currentColor"/><circle cx="14" cy="24" r="2" fill="currentColor"/><circle cx="36" cy="22" r="2" fill="currentColor"/></svg>
+        <div class="eyebrow">01</div>
+        <h3>Street art</h3>
+        <p>Berlijn staat bekend om zijn street art. Overal in de stad zie je grote muurschilderingen en graffiti. De bekendste plek is de East Side Gallery, waar kunstenaars kunst hebben gemaakt op een overgebleven deel van de Berlijnse Muur. Street art laat zien hoe creatief en vrij de stad is.</p>
+      </div>
+      <div class="v-card reveal">
+        <svg class="v-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="20" width="28" height="10" rx="5" stroke="currentColor" stroke-width="3" fill="none"/><line x1="14" y1="30" x2="14" y2="38" stroke="currentColor" stroke-width="3"/><line x1="34" y1="30" x2="34" y2="38" stroke="currentColor" stroke-width="3"/></svg>
+        <div class="eyebrow">02</div>
+        <h3>Eten</h3>
+        <p>In Berlijn kun je eten uit de hele wereld vinden. Een bekend gerecht is Currywurst, een worst met currysaus. Ook is de döner kebab erg populair. Door de vele verschillende culturen heeft Berlijn een gevarieerde keuken.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOTEL -->
+<section class="hotel" id="hotel">
+  <div class="wrap">
+    <div class="hotel-grid">
+      <div class="hotel-text reveal">
+        <div class="eyebrow">Verblijf</div>
+        <h2 style="font-size:clamp(2.2rem,4.5vw,3.2rem);color:var(--text-light);margin-bottom:24px;">Hotel Mauerblick</h2>
+        <p>Jullie groep verblijft in Hotel Mauerblick, een gezellig hotel in het hart van Berlijn-Friedrichshain — op loopafstand van de Spree en de East Side Gallery, en vlakbij een U-Bahn station waarmee je zo bij alle bezienswaardigheden uit dit project bent.</p>
+        <p style="margin-top:16px;">Het hotel is ingericht op schoolgroepen, met ruime meerpersoonskamers en een gezamenlijke lounge om de dag samen te bespreken.</p>
+        <div class="chip-row">
+          <span class="chip">Ontbijtbuffet inbegrepen</span>
+          <span class="chip">Gratis WiFi</span>
+          <span class="chip">Fietsverhuur</span>
+          <span class="chip">Groepskamers (2–4 pers.)</span>
+          <span class="chip">24-uurs receptie</span>
+        </div>
+        <div class="fact-grid">
+          <div class="fact"><span>Taal</span>Duits</div>
+          <div class="fact"><span>Valuta</span>Euro (€)</div>
+          <div class="fact"><span>Tijdzone</span>CET (GMT+1)</div>
+          <div class="fact"><span>Beste reistijd</span>April – oktober</div>
+        </div>
+      </div>
+      <div class="hotel-art reveal">
+        <svg viewBox="0 0 300 320" aria-hidden="true">
+          <rect x="40" y="60" width="220" height="220" fill="#383c44"/>
+          <rect x="40" y="60" width="220" height="20" fill="#52565f"/>
+          <g fill="#1b1c24">
+            <rect x="60" y="100" width="34" height="34"/><rect x="110" y="100" width="34" height="34"/>
+            <rect x="160" y="100" width="34" height="34"/><rect x="210" y="100" width="34" height="34"/>
+            <rect x="60" y="150" width="34" height="34"/><rect x="110" y="150" width="34" height="34"/>
+            <rect x="160" y="150" width="34" height="34"/><rect x="210" y="150" width="34" height="34"/>
+            <rect x="60" y="200" width="34" height="34"/><rect x="110" y="200" width="34" height="34"/>
+            <rect x="160" y="200" width="34" height="34"/><rect x="210" y="200" width="34" height="34"/>
+          </g>
+          <g fill="#e3a23c" opacity="0.85">
+            <rect x="61" y="101" width="32" height="32"/><rect x="161" y="151" width="32" height="32"/><rect x="211" y="101" width="32" height="32"/>
+          </g>
+          <rect x="130" y="250" width="40" height="30" fill="#1b1c24"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="wandeling" id="wandeling">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">De route</div>
+      <h2>Stadswandeling</h2>
+      <p>Een wandeling langs de belangrijkste plekken uit de Tweede Wereldoorlog en de Koude Oorlog, van het Reichstag tot de East Side Gallery. Druk bij elke stop op 🎧 om de uitleg te beluisteren via onze gratis audiotour.</p>
+    </div>
+    <div class="route-meta reveal">
+      <span><b>8 km</b> · totale afstand</span>
+      <span><b>1u 51m</b> · looptijd</span>
+      <span><b>6</b> · stops</span>
+      <span><b>🎧</b> audiotour bij elke stop</span>
+    </div>
+
+    <div class="route">
+      <div class="stop reveal">
+        <div class="stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L4 8 Q12 2 20 8 L20 20" fill="none" stroke="currentColor" stroke-width="1.6"/><line x1="2" y1="20" x2="22" y2="20" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <div class="stop-num">STOP 01</div>
+        <h3>Reichstag Building</h3>
+        <button class="audio-btn" type="button" aria-label="Beluister deze stop">
+          <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14 V10 Q4 4 12 4 Q20 4 20 10 V14" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="2" y="13" width="5" height="7" rx="2" fill="currentColor"/><rect x="17" y="13" width="5" height="7" rx="2" fill="currentColor"/></svg>
+          <span class="audio-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="audio-label">Beluister</span>
+        </button>
+        <p>Het Reichstaggebouw is het parlementsgebouw van Duitsland. Tijdens de Slag om Berlijn in 1945 werd er zwaar om gevochten door de Sovjets, wat het einde van de Tweede Wereldoorlog in Europa betekende. Het gebouw staat tegenwoordig symbool voor de Duitse democratie. Bezoekers kunnen het gerestaureerde gebouw en de beroemde glazen koepel bekijken.</p>
+      </div>
+      <div class="stop reveal">
+        <div class="stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="4" height="10" fill="currentColor"/><rect x="9" y="6" width="4" height="14" fill="currentColor"/><rect x="15" y="9" width="4" height="11" fill="currentColor"/></svg></div>
+        <div class="stop-num">STOP 02</div>
+        <h3>Holocaust Monument</h3>
+        <button class="audio-btn" type="button" aria-label="Beluister deze stop">
+          <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14 V10 Q4 4 12 4 Q20 4 20 10 V14" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="2" y="13" width="5" height="7" rx="2" fill="currentColor"/><rect x="17" y="13" width="5" height="7" rx="2" fill="currentColor"/></svg>
+          <span class="audio-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="audio-label">Beluister</span>
+        </button>
+        <p>Het Holocaustmonument werd in 2005 geopend ter nagedachtenis aan de ongeveer zes miljoen Joden die tijdens de Holocaust werden vermoord. Het monument bestaat uit 2.711 betonnen blokken van verschillende hoogtes en ligt in het centrum van Berlijn. Naast het monument bevindt zich een informatiecentrum over de slachtoffers van de Holocaust.</p>
+      </div>
+      <div class="stop reveal">
+        <div class="stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L12 14" stroke="currentColor" stroke-width="1.6"/><path d="M6 14 L18 14 L18 20 L6 20 Z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 14 L12 9 L15 14" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <div class="stop-num">STOP 03</div>
+        <h3>Führerbunker</h3>
+        <button class="audio-btn" type="button" aria-label="Beluister deze stop">
+          <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14 V10 Q4 4 12 4 Q20 4 20 10 V14" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="2" y="13" width="5" height="7" rx="2" fill="currentColor"/><rect x="17" y="13" width="5" height="7" rx="2" fill="currentColor"/></svg>
+          <span class="audio-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="audio-label">Beluister</span>
+        </button>
+        <p>De Führerbunker was een ondergrondse bunker waar Adolf Hitler zich tijdens de laatste maanden van de Tweede Wereldoorlog schuilhield. Op 30 april 1945 pleegde hij hier zelfmoord toen Sovjettroepen hem hadden omsingeld. De bunker zelf bestaat niet meer, maar er staat tegenwoordig een informatiebord dat uitlegt wat hier is gebeurd.</p>
+      </div>
+      <div class="stop reveal">
+        <div class="stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="3" height="18" fill="currentColor"/><rect x="10.5" y="3" width="3" height="18" fill="currentColor"/><rect x="16" y="3" width="3" height="18" fill="currentColor"/></svg></div>
+        <div class="stop-num">STOP 04</div>
+        <h3>Berlijnse Muur</h3>
+        <button class="audio-btn" type="button" aria-label="Beluister deze stop">
+          <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14 V10 Q4 4 12 4 Q20 4 20 10 V14" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="2" y="13" width="5" height="7" rx="2" fill="currentColor"/><rect x="17" y="13" width="5" height="7" rx="2" fill="currentColor"/></svg>
+          <span class="audio-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="audio-label">Beluister</span>
+        </button>
+        <p>De Berlijnse Muur werd in 1961 gebouwd door Oost-Duitsland om te voorkomen dat inwoners naar West-Berlijn zouden vluchten. Families en vrienden werden hierdoor van elkaar gescheiden. De muur bleef staan tot 1989. Vandaag de dag zijn op verschillende plekken delen van de muur te zien, samen met monumenten en informatieborden.</p>
+      </div>
+      <div class="stop reveal">
+        <div class="stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="16" height="4" fill="currentColor"/><line x1="12" y1="13" x2="12" y2="20" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="6" r="2.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <div class="stop-num">STOP 05</div>
+        <h3>Checkpoint Charlie</h3>
+        <button class="audio-btn" type="button" aria-label="Beluister deze stop">
+          <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14 V10 Q4 4 12 4 Q20 4 20 10 V14" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="2" y="13" width="5" height="7" rx="2" fill="currentColor"/><rect x="17" y="13" width="5" height="7" rx="2" fill="currentColor"/></svg>
+          <span class="audio-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="audio-label">Beluister</span>
+        </button>
+        <p>Checkpoint Charlie was van 1961 tot 1989 de bekendste grensovergang tussen Oost- en West-Berlijn. Hier konden diplomaten, militairen en buitenlanders de grens passeren. Tegenwoordig staan er een nagebouwd wachthuisje, informatieborden en een museum dat vertelt over vluchtpogingen en het leven in een verdeelde stad.</p>
+      </div>
+      <div class="stop reveal">
+        <div class="stamp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18 Q8 6 12 18 Q16 4 20 18" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        <div class="stop-num">STOP 06</div>
+        <h3>East Side Gallery</h3>
+        <button class="audio-btn" type="button" aria-label="Beluister deze stop">
+          <svg class="audio-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14 V10 Q4 4 12 4 Q20 4 20 10 V14" stroke="currentColor" stroke-width="1.6" fill="none"/><rect x="2" y="13" width="5" height="7" rx="2" fill="currentColor"/><rect x="17" y="13" width="5" height="7" rx="2" fill="currentColor"/></svg>
+          <span class="audio-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="audio-label">Beluister</span>
+        </button>
+        <p>De East Side Gallery is een 1,3 kilometer lang stuk van de voormalige Berlijnse Muur. Nadat de muur in 1989 was gevallen, beschilderden kunstenaars uit de hele wereld dit deel met kleurrijke kunstwerken. De galerij herinnert aan vrijheid, vrede en de hereniging van Duitsland.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VERVOER -->
+<section class="vervoer" id="vervoer">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Praktische info</div>
+      <h2 style="color:var(--ink);">Vervoer</h2>
+      <p style="color:#5a5648;">Zo kom je in Berlijn — en zo verplaats je je er moeiteloos doorheen.</p>
+    </div>
+    <div class="info-grid">
+      <div class="info-card reveal">
+        <svg class="info-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4 L30 24 L44 30 L30 32 L24 44 L18 32 L4 30 L18 24 Z" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+        <h3>Vliegtuig</h3>
+        <p>Berlin Brandenburg Airport (BER) ligt op zo'n 30 minuten van het centrum. De FEX-treinverbinding brengt je direct naar Berlin Hauptbahnhof.</p>
+      </div>
+      <div class="info-card reveal">
+        <svg class="info-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="10" width="28" height="26" rx="6" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="17" cy="36" r="3" fill="currentColor"/><circle cx="31" cy="36" r="3" fill="currentColor"/><line x1="10" y1="22" x2="38" y2="22" stroke="currentColor" stroke-width="2.4"/></svg>
+        <h3>Trein</h3>
+        <p>Rechtstreekse internationale treinen komen aan op Berlin Hauptbahnhof, midden in de stad en goed verbonden met de metro.</p>
+      </div>
+      <div class="info-card reveal">
+        <svg class="info-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="14" width="36" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="15" cy="38" r="3" fill="currentColor"/><circle cx="33" cy="38" r="3" fill="currentColor"/><line x1="6" y1="24" x2="42" y2="24" stroke="currentColor" stroke-width="2.4"/></svg>
+        <h3>Bus</h3>
+        <p>Internationale buslijnen zijn een goedkoop alternatief en stoppen bij het centraal busstation (ZOB Berlin).</p>
+      </div>
+      <div class="info-card reveal">
+        <svg class="info-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="14" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="34" cy="34" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M14 34 L14 18 L30 18 L34 34 M20 18 L24 28 L34 28" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+        <h3>In de stad</h3>
+        <p>Met een BVG-dagkaart reis je onbeperkt met de U-Bahn, S-Bahn, tram en bus — ideaal voor een groep die de hele dag op pad is.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITEITEN -->
+<section class="activiteiten" id="activiteiten">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Praktische info</div>
+      <h2>Activiteiten</h2>
+      <p>Naast de stadswandeling zijn dit de activiteiten die het beste passen bij het thema van de reis.</p>
+    </div>
+    <div class="info-grid info-grid-dark">
+      <div class="info-card info-card-dark reveal">
+        <svg class="info-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="14" width="32" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="24" cy="25" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="8" y1="14" x2="16" y2="6" stroke="currentColor" stroke-width="2.4"/><line x1="40" y1="14" x2="32" y2="6" stroke="currentColor" stroke-width="2.4"/></svg>
+        <h3>DDR Museum</h3>
+        <p>Een interactief museum waar je het dagelijks leven in Oost-Duitsland zelf kunt ervaren — van een DDR-huiskamer tot een ritje in een Trabant.</p>
+      </div>
+      <div class="info-card info-card-dark reveal">
+        <svg class="info-icon" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 40 Q24 46 42 40" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M10 40 L10 24 L34 24 L34 40" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="22" y1="24" x2="22" y2="10" stroke="currentColor" stroke-width="2.4"/><line x1="22" y1="10" x2="32" y2="14" stroke="currentColor" stroke-width="2.4"/></svg>
+        <h3>Boottocht over de Spree</h3>
+        <p>Bekijk de Reichstag, de Dom en de Museumsinsel vanaf het water tijdens een rustige boottocht door het centrum.</p>
+      </div>
+      <div class="info-card info-card-dark reveal">
+        <svg class="info-icon" viewBox="0 0 48 48" aria-hidden="true"><circle cx="12" cy="36" r="7" fill="none" stroke="currentColor" stroke-width="2.4"/><circle cx="36" cy="36" r="7" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 36 L20 18 L30 18 M20 18 L28 36 M28 36 L36 36 M24 26 L33 26" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+        <h3>Fietstour langs de Muur</h3>
+        <p>Volg een deel van de voormalige Mauerweg per fiets en zie waar de grens tussen Oost en West precies liep.</p>
+      </div>
+      <div class="info-card info-card-dark reveal">
+        <svg class="info-icon" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="20" width="32" height="20" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M8 20 L24 8 L40 20" fill="none" stroke="currentColor" stroke-width="2.4"/><line x1="16" y1="40" x2="16" y2="26" stroke="currentColor" stroke-width="2.4"/><line x1="24" y1="40" x2="24" y2="26" stroke="currentColor" stroke-width="2.4"/><line x1="32" y1="40" x2="32" y2="26" stroke="currentColor" stroke-width="2.4"/></svg>
+        <h3>Pergamonmuseum</h3>
+        <p>Op Museumsinsel vind je wereldberoemde oudheden, waaronder de Ishtarpoort van Babylon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPS -->
+<section class="tips" id="tips">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Voor vertrek</div>
+      <h2>Praktische tips</h2>
+      <p>Vier dingen om te weten voordat je de koffers pakt.</p>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card reveal">
+        <span class="tip-num">TIP 01</span>
+        <p>Gebruik de metro en trein. Hiermee reis je snel naar alle bezienswaardigheden uit de Tweede Wereldoorlog en de Koude Oorlog.</p>
+      </div>
+      <div class="tip-card reveal">
+        <span class="tip-num">TIP 02</span>
+        <p>Probeer een Currywurst of een döner kebab. Dit zijn bekende en populaire gerechten in Berlijn.</p>
+      </div>
+      <div class="tip-card reveal">
+        <span class="tip-num">TIP 03</span>
+        <p>De Berlijnse Muur deelde 28 jaar lang de stad in Oost en West. In 1989 viel de muur en werd Duitsland weer één land.</p>
+      </div>
+      <div class="tip-card reveal">
+        <span class="tip-num">TIP 04</span>
+        <p>Bezoek de East Side Gallery en Checkpoint Charlie. Hier leer je veel over de Koude Oorlog en de geschiedenis van Berlijn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / BOEK NU -->
+<footer class="footer-cta" id="boeknu">
+  <div class="wrap fc-inner">
+    <div class="eyebrow" style="color:#ffe6e1;">Boek nu</div>
+    <h2>Ontdek de wonderen van Berlijn</h2>
+    <p class="tagline">Van extreme avonturen tot ontspannende vakanties, Berlijn heeft het allemaal!</p>
+    <a href="boeken.html" class="btn btn-ghost" style="font-size:1rem;padding:16px 34px;">Boek nu</a>
+
+    <div class="contact-grid">
+      <div class="contact-list">
+        <a href="tel:+31123456789">+31 123 45 67 89</a>
+        <a href="mailto:justin@niran-stijn.com">justin@niran-stijn.com</a>
+        <a href="https://www.justin-niran-stijn.com">www.justin-niran-stijn.com</a>
+      </div>
+      <div class="credit">DEBREUL TRAVEL — GESCHIEDENISPROJECT · SAMENGESTELD DOOR JUSTIN, NIRAN &amp; STIJN</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // sticky nav background
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // mobile menu
+  const toggle = document.getElementById('navToggle');
+  const closeBtn = document.getElementById('mobileClose');
+  const menu = document.getElementById('mobileMenu');
+  toggle.addEventListener('click', () => menu.classList.add('open'));
+  closeBtn.addEventListener('click', () => menu.classList.remove('open'));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+  // reveal on scroll
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // draw hero crack line on load
+    window.addEventListener('load', () => {
+      const line = document.getElementById('crackLine');
+      if (line) {
+        line.style.transition = 'stroke-dashoffset 1.8s ease-out';
+        requestAnimationFrame(() => { line.style.strokeDashoffset = '0'; });
+      }
+    });
+  }
+
+  // audiotour — reads each stop aloud using the browser's built-in speech synthesis
+  if ('speechSynthesis' in window) {
+    let activeBtn = null;
+    function resetAudioBtn(btn) {
+      btn.classList.remove('playing');
+      btn.querySelector('.audio-label').textContent = 'Beluister';
+    }
+    document.querySelectorAll('.audio-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isThisPlaying = btn.classList.contains('playing');
+        window.speechSynthesis.cancel();
+        if (activeBtn && activeBtn !== btn) resetAudioBtn(activeBtn);
+        if (isThisPlaying) {
+          resetAudioBtn(btn);
+          activeBtn = null;
+          return;
+        }
+        const text = btn.closest('.stop').querySelector('p').textContent;
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'nl-NL';
+        utter.rate = 0.95;
+        utter.onend = () => resetAudioBtn(btn);
+        utter.onerror = () => resetAudioBtn(btn);
+        window.speechSynthesis.speak(utter);
+        btn.classList.add('playing');
+        btn.querySelector('.audio-label').textContent = 'Pauzeer';
+        activeBtn = btn;
+      });
+    });
+  } else {
+    document.body.classList.add('no-audio');
+  }
+</script>
+
+</body>
+</html>
